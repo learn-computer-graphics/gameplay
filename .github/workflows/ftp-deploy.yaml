@@ -1,0 +1,38 @@
+name: ftp-deploy
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  deploy-book:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.7'
+        cache: 'pip' # caching pip dependencies
+
+    - name: Install pip wheel
+      run: pip install wheel
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Build the book
+      run: |
+        jupyter-book build .
+        find . -name '*.html' ! -path './_build/*' | cpio -pdm './_build/html/'
+
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: ftp.cluster023.hosting.ovh.net
+        username: guillaumpm
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./_build/html/
+        server-dir: gameplay/

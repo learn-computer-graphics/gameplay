@@ -1,0 +1,6 @@
+name: maths
+dependencies:
+  - python>=3.9.13
+  - pip
+  - pip:
+    - install -r requirements.txt

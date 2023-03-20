@@ -1,0 +1,16 @@
+# Book settings
+title: LCG - Gameplay
+author: Learn Computer Graphics team
+logo: logo.png
+
+repository:
+  url: https://github.com/learn-computer-graphics/gameplay
+
+html:
+  favicon : "favicon.ico"
+  use_issues_button: true
+  use_repository_button: true
+
+sphinx:
+  config:
+    language: en
